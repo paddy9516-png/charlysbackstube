@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Charlys Backstube – Vorbestellung & Konfigurator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+
+    /* Sanfte Animation für Pizza-Beläge */
+    .topping-layer {
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform-origin: center;
+      pointer-events: none;
+    }
+    .topping-hidden {
+      opacity: 0;
+      transform: scale(0.35) rotate(-12deg);
+    }
+    .topping-visible {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+
+    /* Scharf-Puls-Animation */
+    @keyframes spicyGlow {
+      0% { filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.45)); }
+      100% { filter: drop-shadow(0 0 28px rgba(239, 68, 68, 0.95)); }
+    }
+    .spicy-active {
+      animation: spicyGlow 1.2s infinite alternate ease-in-out;
+    }
+
+    /* Kalender/Uhrzeit Icons in Darkmode gut sichtbar machen */
+    input[type="date"]::-webkit-calendar-picker-indicator,
+    input[type="time"]::-webkit-calendar-picker-indicator {
+      filter: invert(0.85);
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body class="bg-stone-950 text-stone-100 min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-stone-950">
+
+  <!-- ==================== ULTRA-SLIM STICKY HEADER ==================== -->
+  <header class="sticky top-0 z-50 bg-stone-900/95 backdrop-blur-md border-b border-stone-800 shadow-lg">
+    <div class="max-w-5xl mx-auto px-3 sm:px-6 h-12 flex items-center justify-between gap-2">
+      
+      <!-- Logo & Name -->
+      <button type="button" data-action="nav" data-target="menu" class="flex items-center gap-2 text-left group focus:outline-none">
+        <div class="w-6 h-6 rounded-md bg-gradient-to-tr from-amber-600 to-amber-400 flex items-center justify-center text-xs shadow-sm group-hover:scale-105 transition pointer-events-none">
+          🥖
+        </div>
+        <span class="text-sm font-extrabold text-amber-400 tracking-tight pointer-events-none">Charlys Backstube</span>
+      </button>
+
+      <!-- Schnell-Navigation -->
+      <nav class="flex items-center gap-1 text-xs">
+        <button type="button" data-action="nav" data-target="menu" id="nav-btn-menu" class="px-2.5 py-1 rounded-lg font-bold bg-stone-800 text-amber-400 transition">Menü</button>
+        <button type="button" data-action="nav" data-target="pizza" id="nav-btn-pizza" class="px-2.5 py-1 rounded-lg font-semibold text-stone-200 hover:text-white hover:bg-stone-800 transition">Pizza</button>
+        <button type="button" data-action="nav" data-target="breads" id="nav-btn-breads" class="px-2.5 py-1 rounded-lg font-semibold text-stone-200 hover:text-white hover:bg-stone-800 transition">Brote</button>
+        <button type="button" data-action="nav" data-target="dips" id="nav-btn-dips" class="px-2.5 py-1 rounded-lg font-semibold text-stone-200 hover:text-white hover:bg-stone-800 transition">Dips</button>
+      </nav>
+
+      <!-- Warenkorb Button -->
+      <button type="button" data-action="nav" data-target="cart" class="flex items-center gap-1.5 bg-amber-500 hover:bg-amber-400 text-stone-950 px-3 py-1 rounded-lg font-extrabold text-xs shadow-md transition active:scale-95">
+        <span class="pointer-events-none">🛒</span>
+        <span class="hidden sm:inline pointer-events-none">Warenkorb</span>
+        <span id="header-cart-badge" class="bg-stone-950 text-amber-400 font-black text-[11px] px-1.5 py-0.2 rounded-full border border-amber-400/40 pointer-events-none">0</span>
+      </button>
+
+    </div>
+  </header>
+
+  <!-- ==================== HAUPTINHALT ==================== -->
+  <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 pb-28">
+
+    <!-- ==================== VIEW 1: START-MENÜ ==================== -->
+    <section id="view-menu" class="space-y-6">
+      <div class="text-center max-w-xl mx-auto py-2">
+        <span class="inline-block text-[11px] font-bold uppercase tracking-widest text-amber-400 bg-amber-500/10 border border-amber-500/30 px-3 py-0.5 rounded-full mb-2">Frisch & Handgemacht</span>
+        <h1 class="text-2xl sm:text-4xl font-black text-white tracking-tight">Was darf es heute sein?</h1>
+        <p class="text-stone-100 text-sm font-medium mt-2 leading-relaxed">Wähle eine Kategorie aus, tippe deine Lieblingsartikel an und sende deine Bestellung direkt an Patrick.</p>
+      </div>
+
+      <!-- 3 Große Kategorie-Karten -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        
+        <!-- Karte 1: Pizza -->
+        <button type="button" data-action="nav" data-target="pizza" class="group text-left bg-stone-900 hover:bg-stone-800/90 border-2 border-stone-800 hover:border-amber-500 p-6 rounded-2xl transition-all duration-200 shadow-xl flex flex-col justify-between cursor-pointer">
+          <div class="pointer-events-none">
+            <div class="w-14 h-14 rounded-2xl bg-amber-500/15 border border-amber-500/40 flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition">
+              🍕
+            </div>
+            <span class="text-[11px] font-extrabold uppercase tracking-wider text-amber-400">Interaktiver Konfigurator</span>
+            <h2 class="text-xl font-black text-white mt-0.5">Pizza (32 cm)</h2>
+            <p class="text-stone-100 text-sm font-medium mt-2 leading-relaxed whitespace-normal break-words">
+              Knusprige Steinofen-Pizza mit fruchtiger Tomatensauce und geschmolzenem Mozzarella. Frei belegbar mit 16 frischen Zutaten deiner Wahl.
+            </p>
+          </div>
+          <div class="mt-6 pt-3 border-t border-stone-800 flex items-center justify-between text-amber-400 font-extrabold text-xs pointer-events-none">
+            <span>Jetzt Pizza belegen</span>
+            <span class="text-base group-hover:translate-x-1 transition">→</span>
+          </div>
+        </button>
+
+        <!-- Karte 2: Baguettes & Brote -->
+        <button type="button" data-action="nav" data-target="breads" class="group text-left bg-stone-900 hover:bg-stone-800/90 border-2 border-stone-800 hover:border-amber-500 p-6 rounded-2xl transition-all duration-200 shadow-xl flex flex-col justify-between cursor-pointer">
+          <div class="pointer-events-none">
+            <div class="w-14 h-14 rounded-2xl bg-amber-500/15 border border-amber-500/40 flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition">
+              🥖
+            </div>
+            <span class="text-[11px] font-extrabold uppercase tracking-wider text-amber-400">Bäckerei & Catering</span>
+            <h2 class="text-xl font-black text-white mt-0.5">Baguettes & Brote</h2>
+            <p class="text-stone-100 text-sm font-medium mt-2 leading-relaxed whitespace-normal break-words">
+              Ofenfrische Klassiker, Zupfbrot, Fladenbrot sowie mediterrane Ciabatta-Spezialitäten.
+            </p>
+          </div>
+          <div class="mt-6 pt-3 border-t border-stone-800 flex items-center justify-between text-amber-400 font-extrabold text-xs pointer-events-none">
+            <span>Brote auswählen</span>
+            <span class="text-base group-hover:translate-x-1 transition">→</span>
+          </div>
+        </button>
+
+        <!-- Karte 3: Dips & Aufstriche -->
+        <button type="button" data-action="nav" data-target="dips" class="group text-left bg-stone-900 hover:bg-stone-800/90 border-2 border-stone-800 hover:border-amber-500 p-6 rounded-2xl transition-all duration-200 shadow-xl flex flex-col justify-between cursor-pointer">
+          <div class="pointer-events-none">
+            <div class="w-14 h-14 rounded-2xl bg-amber-500/15 border border-amber-500/40 flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition">
+              🥣
+            </div>
+            <span class="text-[11px] font-extrabold uppercase tracking-wider text-amber-400">Feinkost & Catering</span>
+            <h2 class="text-xl font-black text-white mt-0.5">Dips & Aufstriche</h2>
+            <p class="text-stone-100 text-sm font-medium mt-2 leading-relaxed whitespace-normal break-words">
+              Hausgemachte Cremes: Tomatenbutter, Fetacreme, Paprika-Feta, Aioli, Bärlauch, Thunfisch uvm.
+            </p>
+          </div>
+          <div class="mt-6 pt-3 border-t border-stone-800 flex items-center justify-between text-amber-400 font-extrabold text-xs pointer-events-none">
+            <span>Dips auswählen</span>
+            <span class="text-base group-hover:translate-x-1 transition">→</span>
+          </div>
+        </button>
+
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 2: PIZZA KONFIGURATOR ==================== -->
+    <section id="view-pizza" class="hidden space-y-6">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-stone-800 pb-4">
+        <div>
+          <button type="button" data-action="nav" data-target="menu" class="text-xs text-amber-400 hover:underline font-bold flex items-center gap-1 mb-1">
+            ← Zurück zur Übersicht
+          </button>
+          <h2 class="text-2xl font-black text-white">Pizza Konfigurator (Ø 32 cm)</h2>
+          <p class="text-stone-100 text-xs sm:text-sm font-medium whitespace-normal">Tippe auf deine gewünschten Zutaten – der Belag wird sofort live auf der Pizza angezeigt.</p>
+        </div>
+        <button type="button" data-action="reset-pizza" class="text-xs font-bold text-stone-100 hover:text-white bg-stone-900 hover:bg-stone-800 border border-stone-700 px-3 py-2 rounded-xl transition">
+          🔄 Belag zurücksetzen
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        <!-- Linke Seite: Live SVG Pizza -->
+        <div class="lg:col-span-5 bg-stone-900 border border-stone-800 p-5 rounded-2xl flex flex-col items-center shadow-xl">
+          <div id="pizza-visual-box" class="relative w-60 h-60 sm:w-72 sm:h-72 select-none pointer-events-none">
+            <svg viewBox="0 0 300 300" class="w-full h-full drop-shadow-2xl">
+              <!-- Knuspriger Rand & Teig -->
+              <circle cx="150" cy="150" r="142" fill="#9a3412" />
+              <circle cx="150" cy="150" r="136" fill="#d97706" />
+              <!-- Tomatensauce -->
+              <circle cx="150" cy="150" r="122" fill="#b91c1c" />
+              <!-- Mozzarella Käse -->
+              <circle cx="150" cy="150" r="115" fill="#fef08a" opacity="0.95" />
+              <circle cx="115" cy="110" r="12" fill="#fde047" opacity="0.6" />
+              <circle cx="185" cy="175" r="14" fill="#fde047" opacity="0.6" />
+              <circle cx="130" cy="190" r="10" fill="#fde047" opacity="0.6" />
+
+              <!-- 16 Toppings SVG Layers -->
+              <g id="svg-topping-salami" class="topping-layer topping-hidden">
+                <circle cx="100" cy="95" r="16" fill="#991b1b" stroke="#7f1d1d" stroke-width="2"/>
+                <circle cx="195" cy="110" r="16" fill="#991b1b" stroke="#7f1d1d" stroke-width="2"/>
+                <circle cx="150" cy="150" r="17" fill="#991b1b" stroke="#7f1d1d" stroke-width="2"/>
+                <circle cx="105" cy="185" r="16" fill="#991b1b" stroke="#7f1d1d" stroke-width="2"/>
+                <circle cx="195" cy="190" r="16" fill="#991b1b" stroke="#7f1d1d" stroke-width="2"/>
+              </g>
+              <g id="svg-topping-schinken" class="topping-layer topping-hidden">
+                <rect x="125" y="75" width="30" height="18" rx="4" fill="#f472b6" transform="rotate(15 140 84)"/>
+                <rect x="75" y="130" width="30" height="18" rx="4" fill="#f472b6" transform="rotate(-20 90 139)"/>
+                <rect x="180" y="140" width="30" height="18" rx="4" fill="#f472b6" transform="rotate(25 195 149)"/>
+                <rect x="135" y="200" width="30" height="18" rx="4" fill="#f472b6" transform="rotate(-10 150 209)"/>
+              </g>
+              <g id="svg-topping-thunfisch" class="topping-layer topping-hidden">
+                <path d="M105 110 Q120 100 130 115 T115 128 Z" fill="#a8a29e" stroke="#78716c" stroke-width="1.5"/>
+                <path d="M175 95 Q190 85 198 100 T180 112 Z" fill="#a8a29e" stroke="#78716c" stroke-width="1.5"/>
+                <path d="M155 175 Q170 165 180 180 T160 192 Z" fill="#a8a29e" stroke="#78716c" stroke-width="1.5"/>
+                <path d="M90 165 Q105 155 115 170 T95 182 Z" fill="#a8a29e" stroke="#78716c" stroke-width="1.5"/>
+              </g>
+              <g id="svg-topping-oliven" class="topping-layer topping-hidden">
+                <circle cx="155" cy="95" r="8" fill="#1c1917"/><circle cx="155" cy="95" r="3" fill="#facc15"/>
+                <circle cx="95" cy="145" r="8" fill="#1c1917"/><circle cx="95" cy="145" r="3" fill="#facc15"/>
+                <circle cx="205" cy="155" r="8" fill="#1c1917"/><circle cx="205" cy="155" r="3" fill="#facc15"/>
+                <circle cx="145" cy="195" r="8" fill="#1c1917"/><circle cx="145" cy="195" r="3" fill="#facc15"/>
+              </g>
+              <g id="svg-topping-garnelen" class="topping-layer topping-hidden">
+                <path d="M85 105 C80 90 100 85 105 98 C108 105 95 110 85 105" fill="#fb7185" stroke="#e11d48" stroke-width="2"/>
+                <path d="M195 90 C190 75 210 70 215 83 C218 90 205 95 195 90" fill="#fb7185" stroke="#e11d48" stroke-width="2"/>
+                <path d="M165 215 C160 200 180 195 185 208 C188 215 175 220 165 215" fill="#fb7185" stroke="#e11d48" stroke-width="2"/>
+                <path d="M120 155 C115 140 135 135 140 148 C143 155 130 160 120 155" fill="#fb7185" stroke="#e11d48" stroke-width="2"/>
+              </g>
+              <g id="svg-topping-muscheln" class="topping-layer topping-hidden">
+                <path d="M130 70 Q142 55 154 70 Q142 82 130 70" fill="#44403c" stroke="#292524" stroke-width="2"/>
+                <path d="M210 170 Q222 155 234 170 Q222 182 210 170" fill="#44403c" stroke="#292524" stroke-width="2"/>
+                <path d="M80 180 Q92 165 104 180 Q92 192 80 180" fill="#44403c" stroke="#292524" stroke-width="2"/>
+              </g>
+              <g id="svg-topping-ananas" class="topping-layer topping-hidden">
+                <polygon points="118,125 130,108 142,125" fill="#facc15" stroke="#ca8a04" stroke-width="1.5"/>
+                <polygon points="175,125 187,108 199,125" fill="#facc15" stroke="#ca8a04" stroke-width="1.5"/>
+                <polygon points="145,178 157,161 169,178" fill="#facc15" stroke="#ca8a04" stroke-width="1.5"/>
+                <polygon points="95,175 107,158 119,175" fill="#facc15" stroke="#ca8a04" stroke-width="1.5"/>
+              </g>
+              <g id="svg-topping-extra-scharf" class="topping-layer topping-hidden">
+                <path d="M145 100 Q152 82 158 100 Q152 115 145 100" fill="#dc2626"/>
+                <path d="M108 138 Q115 120 121 138 Q115 153 108 138" fill="#dc2626"/>
+                <path d="M180 142 Q187 124 193 142 Q187 157 180 142" fill="#dc2626"/>
+                <path d="M138 188 Q145 170 151 188 Q145 203 138 188" fill="#dc2626"/>
+              </g>
+              <g id="svg-topping-feta" class="topping-layer topping-hidden">
+                <rect x="142" y="112" width="15" height="15" fill="#ffffff" stroke="#d6d3d1" stroke-width="1.5" rx="2"/>
+                <rect x="92" y="142" width="15" height="15" fill="#ffffff" stroke="#d6d3d1" stroke-width="1.5" rx="2"/>
+                <rect x="182" y="145" width="15" height="15" fill="#ffffff" stroke="#d6d3d1" stroke-width="1.5" rx="2"/>
+                <rect x="132" y="168" width="15" height="15" fill="#ffffff" stroke="#d6d3d1" stroke-width="1.5" rx="2"/>
+              </g>
+              <g id="svg-topping-champignons" class="topping-layer topping-hidden">
+                <path d="M120 98 C120 86 142 86 142 98 L136 108 L126 108 Z" fill="#d6d3d1" stroke="#78716c" stroke-width="1.5"/>
+                <path d="M175 182 C175 170 197 170 197 182 L191 192 L181 192 Z" fill="#d6d3d1" stroke="#78716c" stroke-width="1.5"/>
+                <path d="M82 115 C82 103 104 103 104 115 L98 125 L88 125 Z" fill="#d6d3d1" stroke="#78716c" stroke-width="1.5"/>
+              </g>
+              <g id="svg-topping-peperoni" class="topping-layer topping-hidden">
+                <path d="M108 118 Q125 110 135 125" stroke="#16a34a" stroke-width="5" fill="none" stroke-linecap="round"/>
+                <path d="M168 168 Q185 158 195 175" stroke="#16a34a" stroke-width="5" fill="none" stroke-linecap="round"/>
+                <path d="M98 178 Q115 168 122 184" stroke="#16a34a" stroke-width="5" fill="none" stroke-linecap="round"/>
+              </g>
+              <g id="svg-topping-zwiebeln" class="topping-layer topping-hidden">
+                <path d="M138 82 A 24 24 0 0 1 172 95" stroke="#a855f7" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                <path d="M85 135 A 24 24 0 0 1 112 162" stroke="#a855f7" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                <path d="M145 192 A 24 24 0 0 1 178 208" stroke="#a855f7" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+              </g>
+              <g id="svg-topping-knoblauch" class="topping-layer topping-hidden">
+                <circle cx="132" cy="138" r="3.5" fill="#fef9c3" stroke="#ca8a04" stroke-width="1"/>
+                <circle cx="165" cy="112" r="3.5" fill="#fef9c3" stroke="#ca8a04" stroke-width="1"/>
+                <circle cx="172" cy="162" r="3.5" fill="#fef9c3" stroke="#ca8a04" stroke-width="1"/>
+                <circle cx="118" cy="172" r="3.5" fill="#fef9c3" stroke="#ca8a04" stroke-width="1"/>
+              </g>
+              <g id="svg-topping-parmesan" class="topping-layer topping-hidden">
+                <line x1="118" y1="125" x2="134" y2="129" stroke="#fef08a" stroke-width="3" stroke-linecap="round"/>
+                <line x1="158" y1="145" x2="174" y2="149" stroke="#fef08a" stroke-width="3" stroke-linecap="round"/>
+                <line x1="135" y1="175" x2="152" y2="179" stroke="#fef08a" stroke-width="3" stroke-linecap="round"/>
+              </g>
+              <g id="svg-topping-paprika" class="topping-layer topping-hidden">
+                <path d="M128 92 Q145 102 135 115" stroke="#ef4444" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+                <path d="M185 122 Q175 135 185 148" stroke="#eab308" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+                <path d="M105 148 Q118 160 105 172" stroke="#ef4444" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+              </g>
+              <g id="svg-topping-mais" class="topping-layer topping-hidden">
+                <circle cx="140" cy="120" r="4.5" fill="#fbbf24"/>
+                <circle cx="150" cy="124" r="4" fill="#f59e0b"/>
+                <circle cx="165" cy="132" r="4.5" fill="#fbbf24"/>
+                <circle cx="122" cy="155" r="4.5" fill="#fbbf24"/>
+                <circle cx="175" cy="180" r="4.5" fill="#fbbf24"/>
+              </g>
+            </svg>
+          </div>
+
+          <div class="mt-4 w-full bg-stone-950 border border-stone-800 rounded-xl p-3.5 text-center">
+            <span class="text-xs font-bold text-stone-200 block mb-1">Aktueller Belag deiner Pizza:</span>
+            <div id="pizza-live-summary" class="text-sm font-extrabold text-amber-400 whitespace-normal break-words leading-relaxed">
+              Klassische Margherita (Tomatensauce & Mozzarella)
+            </div>
+          </div>
+        </div>
+
+        <!-- Rechte Seite: 16 Zutaten Buttons + In den Korb -->
+        <div class="lg:col-span-7 bg-stone-900 border border-stone-800 p-5 rounded-2xl shadow-xl space-y-5">
+          <div class="flex items-center justify-between gap-2">
+            <h3 class="font-extrabold text-white text-base">Zutaten auswählen (antippen):</h3>
+            <span id="pizza-topping-count" class="text-xs font-extrabold bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2.5 py-1 rounded-full shrink-0">0 gewählt</span>
+          </div>
+
+          <!-- Grid für 16 Zutaten – garantiert ohne Text-Abschneiden -->
+          <div id="pizza-toppings-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+            <!-- Wird beim Start per JS gerendert -->
+          </div>
+
+          <!-- Menge & In den Warenkorb -->
+          <div class="pt-4 border-t border-stone-800 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <div class="flex items-center justify-between sm:justify-start gap-3 bg-stone-950 border border-stone-700 rounded-xl px-3.5 py-2.5">
+              <span class="text-xs font-bold text-stone-100">Anzahl Pizzen:</span>
+              <div class="flex items-center gap-2">
+                <button type="button" data-action="pizza-qty" data-delta="-1" class="w-8 h-8 rounded-lg bg-stone-800 hover:bg-stone-700 text-white font-black text-base flex items-center justify-center active:scale-95 transition">-</button>
+                <span id="pizza-qty-display" class="w-6 text-center font-black text-amber-400 text-base">1</span>
+                <button type="button" data-action="pizza-qty" data-delta="1" class="w-8 h-8 rounded-lg bg-stone-800 hover:bg-stone-700 text-white font-black text-base flex items-center justify-center active:scale-95 transition">+</button>
+              </div>
+            </div>
+
+            <button type="button" data-action="add-pizza" class="flex-1 bg-amber-500 hover:bg-amber-400 text-stone-950 font-black py-3.5 px-5 rounded-xl text-sm shadow-lg shadow-amber-500/20 transition active:scale-95 flex items-center justify-center gap-2">
+              <span class="text-base pointer-events-none">🍕</span>
+              <span class="pointer-events-none">Pizza in den Warenkorb legen</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 3: BAGUETTES & BROTE ==================== -->
+    <section id="view-breads" class="hidden space-y-8">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-stone-800 pb-4">
+        <div>
+          <button type="button" data-action="nav" data-target="menu" class="text-xs text-amber-400 hover:underline font-bold flex items-center gap-1 mb-1">
+            ← Zurück zur Übersicht
+          </button>
+          <h2 class="text-2xl font-black text-white">Baguette- & Brot-Auswahl</h2>
+          <p class="text-stone-100 text-sm font-medium">Tippe direkt auf <strong class="text-amber-400">+ Auswählen</strong> oder passe die Stückzahl mit <strong class="text-amber-400">- / +</strong> an.</p>
+        </div>
+        <button type="button" data-action="nav" data-target="dips" class="text-xs font-bold bg-stone-900 hover:bg-stone-800 text-amber-400 border border-amber-500/40 px-3.5 py-2 rounded-xl transition">
+          Weiter zu den Dips →
+        </button>
+      </div>
+
+      <!-- Klassiker & Spezialitäten -->
+      <div class="space-y-4">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">🥖</span>
+          <h3 class="text-lg font-extrabold text-amber-400 tracking-tight">Klassiker & Spezialitäten</h3>
+        </div>
+        <div id="breads-classic-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      </div>
+
+      <!-- Fladenbrot & Ciabatta -->
+      <div class="space-y-4 pt-4 border-t border-stone-800">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">🫓</span>
+          <h3 class="text-lg font-extrabold text-amber-400 tracking-tight">Fladenbrot & Ciabatta</h3>
+        </div>
+        <div id="breads-ciabatta-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 4: DIPS & AUFSTRICHE ==================== -->
+    <section id="view-dips" class="hidden space-y-8">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-stone-800 pb-4">
+        <div>
+          <button type="button" data-action="nav" data-target="menu" class="text-xs text-amber-400 hover:underline font-bold flex items-center gap-1 mb-1">
+            ← Zurück zur Übersicht
+          </button>
+          <h2 class="text-2xl font-black text-white">Frische Dips & Brotaufstriche</h2>
+          <p class="text-stone-100 text-sm font-medium">Wähle deine Lieblings-Aufstriche direkt per Klick auf <strong class="text-amber-400">+ Auswählen</strong>.</p>
+        </div>
+        <button type="button" data-action="nav" data-target="breads" class="text-xs font-bold bg-stone-900 hover:bg-stone-800 text-amber-400 border border-amber-500/40 px-3.5 py-2 rounded-xl transition">
+          ← Zu den Baguettes & Broten
+        </button>
+      </div>
+
+      <!-- Teil 1 -->
+      <div class="space-y-4">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">🥣</span>
+          <h3 class="text-lg font-extrabold text-amber-400 tracking-tight">Cremes & Aufstriche (Teil 1)</h3>
+        </div>
+        <div id="dips-part1-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      </div>
+
+      <!-- Teil 2 -->
+      <div class="space-y-4 pt-4 border-t border-stone-800">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">🧄</span>
+          <h3 class="text-lg font-extrabold text-amber-400 tracking-tight">Cremes & Aufstriche (Teil 2)</h3>
+        </div>
+        <div id="dips-part2-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 5: WARENKORB & BESTELLUNG ==================== -->
+    <section id="view-cart" class="hidden space-y-6">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-stone-800 pb-4">
+        <div>
+          <button type="button" data-action="nav" data-target="menu" class="text-xs text-amber-400 hover:underline font-bold flex items-center gap-1 mb-1">
+            ← Weiter einkaufen
+          </button>
+          <h2 class="text-2xl font-black text-white">Dein Warenkorb & Bestellzettel</h2>
+        </div>
+        <button type="button" id="clear-cart-btn" data-action="clear-cart" class="hidden text-xs font-bold text-stone-200 hover:text-red-400 bg-stone-900 border border-stone-800 px-3 py-2 rounded-xl transition">
+          🗑️ Warenkorb leeren
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        <!-- Linke Spalte: Artikelliste -->
+        <div class="lg:col-span-7 bg-stone-900 border border-stone-800 p-5 rounded-2xl shadow-xl space-y-4">
+          <div class="flex items-center justify-between border-b border-stone-800 pb-3">
+            <h3 class="font-extrabold text-base text-white">Gewählte Spezialitäten:</h3>
+            <span id="cart-summary-badge" class="text-xs font-extrabold bg-amber-500 text-stone-950 px-2.5 py-0.5 rounded-full">0 Artikel</span>
+          </div>
+
+          <div id="cart-items-list" class="space-y-3">
+            <!-- Dynamisch gefüllt -->
+          </div>
+        </div>
+
+        <!-- Rechte Spalte: Bestellformular -->
+        <div class="lg:col-span-5 bg-stone-900 border border-stone-800 p-5 rounded-2xl shadow-xl">
+          <h3 class="font-extrabold text-base text-white mb-1">Bestelldaten eintragen</h3>
+          <p class="text-xs text-stone-200 font-medium mb-4">Geht direkt per E-Mail an Patrick (Charlys Backstube).</p>
+
+          <form id="checkout-form" class="space-y-3.5">
+            <div>
+              <label class="block text-xs font-bold text-stone-100 uppercase tracking-wider mb-1">Name / Kunde <span class="text-amber-400">*</span></label>
+              <input type="text" id="cust-name" required placeholder="z. B. Familie Müller" class="w-full bg-stone-950 border border-stone-700 focus:border-amber-500 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-stone-400 font-medium focus:outline-none">
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-stone-200 uppercase tracking-wider mb-1">Telefonnummer <span class="text-stone-400 font-normal lowercase">(optional)</span></label>
+              <input type="tel" id="cust-phone" placeholder="z. B. 0170 1234567" class="w-full bg-stone-950 border border-stone-700 focus:border-amber-500 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-stone-400 font-medium focus:outline-none">
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-bold text-stone-200 uppercase tracking-wider mb-1">Abhol-/Lieferdatum</label>
+                <input type="date" id="cust-date" class="w-full bg-stone-950 border border-stone-700 focus:border-amber-500 rounded-xl px-3 py-2.5 text-xs text-white font-medium focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-stone-200 uppercase tracking-wider mb-1">Uhrzeit</label>
+                <input type="time" id="cust-time" class="w-full bg-stone-950 border border-stone-700 focus:border-amber-500 rounded-xl px-3 py-2.5 text-xs text-white font-medium focus:outline-none">
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-stone-200 uppercase tracking-wider mb-1">Anmerkungen / Wünsche</label>
+              <textarea id="cust-notes" rows="2" placeholder="z. B. Portionsgrößen, Ciabatta ungeschnitten..." class="w-full bg-stone-950 border border-stone-700 focus:border-amber-500 rounded-xl px-3.5 py-2 text-sm text-white placeholder-stone-400 font-medium focus:outline-none resize-none"></textarea>
+            </div>
+
+            <div id="form-error-box" class="hidden p-3 rounded-xl bg-red-500/15 border border-red-500/40 text-red-300 text-xs font-semibold"></div>
+
+            <button type="submit" id="submit-order-btn" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 font-black py-3.5 px-5 rounded-xl text-sm shadow-lg shadow-amber-500/20 transition active:scale-95 flex items-center justify-center gap-2 disabled:opacity-50">
+              <span>🥖</span>
+              <span id="submit-order-text">Bestellung jetzt absenden</span>
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 6: ERFOLGSMELDUNG ==================== -->
+    <section id="view-success" class="hidden py-12 max-w-lg mx-auto text-center space-y-5">
+      <div class="w-20 h-20 bg-emerald-500/20 text-emerald-400 border-2 border-emerald-500/40 rounded-full flex items-center justify-center text-4xl mx-auto shadow-lg">
+        ✓
+      </div>
+      <h2 class="text-3xl font-black text-white">Bestellung erfolgreich gesendet!</h2>
+      <p class="text-stone-100 text-sm font-medium leading-relaxed">
+        Vielen Dank! Deine Bestellung wurde direkt an <strong class="text-amber-400">Patrick (Charlys Backstube)</strong> übermittelt.
+      </p>
+      <div id="success-summary-box" class="bg-stone-900 border border-stone-800 rounded-2xl p-4 text-left text-xs text-stone-100 space-y-1.5 font-medium whitespace-normal break-words"></div>
+      <div class="pt-3">
+        <button type="button" data-action="new-order" class="bg-amber-500 hover:bg-amber-400 text-stone-950 font-black px-6 py-3 rounded-xl text-sm shadow-md transition">
+          Neue Bestellung starten
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== FLOATING WARENKORB LEISTE UNTEN ==================== -->
+  <div id="bottom-cart-bar" class="fixed bottom-0 inset-x-0 z-40 p-3 bg-stone-900/95 backdrop-blur-md border-t border-stone-800 shadow-2xl hidden">
+    <div class="max-w-5xl mx-auto flex items-center justify-between gap-4">
+      <div class="flex items-center gap-2.5">
+        <span class="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-base">🧺</span>
+        <div>
+          <span id="bottom-bar-count" class="text-sm font-black text-white block">0 Artikel ausgewählt</span>
+          <span class="text-xs text-stone-200 font-medium block">Bereit zur Vorbestellung</span>
+        </div>
+      </div>
+      <button type="button" data-action="nav" data-target="cart" class="bg-amber-500 hover:bg-amber-400 text-stone-950 font-black px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-lg transition active:scale-95">
+        Zum Warenkorb & Bestellen →
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== TOAST BENACHRICHTIGUNG ==================== -->
+  <div id="toast-box" class="fixed top-16 right-4 z-50 bg-stone-900 border-2 border-amber-500 text-white px-4 py-2.5 rounded-xl shadow-2xl flex items-center gap-2.5 transition-all duration-200 opacity-0 pointer-events-none -translate-y-2">
+    <span class="text-amber-400 text-base">✓</span>
+    <span id="toast-text" class="text-xs font-bold text-stone-100">Hinzugefügt!</span>
+  </div>
+
+  <!-- ==================== JAVASCRIPT LOGIK ==================== -->
+  <script>
+    (function() {
+      const WEB3FORMS_KEY = "13ef8479-99fe-4812-9698-2d77bf8f80b8";
+
+      // 16 Pizza-Zutaten mit klar lesbaren Beschreibungen
+      const TOPPINGS = [
+        { id: 'thunfisch', label: '🐟 Thunfisch', sub: 'Zarter Thunfisch' },
+        { id: 'schinken', label: '🍖 Schinken', sub: 'Saftiger Kochschinken' },
+        { id: 'salami', label: '🥓 Salami', sub: 'Würzige Edel-Salami' },
+        { id: 'oliven', label: '🫒 Oliven', sub: 'Schwarze Oliven' },
+        { id: 'garnelen', label: '🦐 Garnelen', sub: 'Feine Cocktail-Garnelen' },
+        { id: 'muscheln', label: '🦪 Muscheln', sub: 'Aromatische Muscheln' },
+        { id: 'ananas', label: '🍍 Ananas', sub: 'Saftige Ananasstücke' },
+        { id: 'extra-scharf', label: '🔥 Extra Scharf', sub: 'Feurige Peperoncini & Chili' },
+        { id: 'feta', label: '🧀 Feta', sub: 'Original Hirtenkäse' },
+        { id: 'champignons', label: '🍄 Champignons', sub: 'Frische braune Pilze' },
+        { id: 'peperoni', label: '🌶️ Peperoni', sub: 'Milde grüne Peperoni' },
+        { id: 'zwiebeln', label: '🧅 Zwiebeln', sub: 'Rote Zwiebelringe' },
+        { id: 'knoblauch', label: '🧄 Knoblauch', sub: 'Frischer Knoblauch' },
+        { id: 'parmesan', label: '🧀 Parmesan', sub: 'Gehobelter Grana Padano' },
+        { id: 'paprika', label: '🫑 Paprika', sub: 'Knackige bunte Paprika' },
+        { id: 'mais', label: '🌽 Mais', sub: 'Goldgelber Süßmais' }
+      ];
+
+      // Baguettes & Brote (exakt nach Foto 1)
+      const BREADS_CLASSIC = [
+        { id: 'b_zwiebel', name: 'Zwiebel', category: 'Klassiker & Spezialitäten', desc: 'Knuspriges Baguette, frisch gebacken mit aromatischen Röst- und Frühlingszwiebeln.' },
+        { id: 'b_kaese_oregano', name: 'Käse Oregano', category: 'Klassiker & Spezialitäten', desc: 'Überbacken mit herzhafter Käsekruste und duftendem mediterranem Oregano.' },
+        { id: 'b_koerner', name: 'Körner', category: 'Klassiker & Spezialitäten', desc: 'Kerniges Baguette, reichhaltig bestreut mit Sesam, Leinsamen & Sonnenblumenkernen.' },
+        { id: 'b_laugen', name: 'Laugen', category: 'Klassiker & Spezialitäten', desc: 'Traditionelles Laugengebäck mit kastanienbrauner Kruste und feinem Hagelsalz.' },
+        { id: 'b_walnuss', name: 'Walnuss', category: 'Klassiker & Spezialitäten', desc: 'Kräftiges Krustenbaguette mit knackigen, gerösteten Walnussstücken.' },
+        { id: 'b_zupfbrot', name: 'Zupfbrot', category: 'Klassiker & Spezialitäten', desc: 'Ofenfrisches Zupfbrot zum Teilen, verfeinert mit aromatischer Kräuterbutter.' }
+      ];
+
+      const BREADS_CIABATTA = [
+        { id: 'c_fladenbrot', name: 'Fladenbrot', category: 'Fladenbrot & Ciabatta', desc: 'Goldbraun gebackenes, fluffiges Fladenbrot mit Sesam und Schwarzkümmel.' },
+        { id: 'c_basis', name: 'Ciabatta (Basis)', category: 'Fladenbrot & Ciabatta', desc: 'Klassisches italienisches Weißbrot mit lockerer Krume und knuspriger Kruste.' },
+        { id: 'c_tomate', name: 'Ciabatta • Tomate', category: 'Fladenbrot & Ciabatta', desc: 'Mediterranes Ciabatta mit eingebackenen, sonnengetrockneten Tomaten.' },
+        { id: 'c_parmesan', name: 'Ciabatta • Parmesan', category: 'Fladenbrot & Ciabatta', desc: 'Herzhaftes Ciabatta, mit echtem gereiftem Parmesan goldgelb gratiniert.' },
+        { id: 'c_feta', name: 'Ciabatta • Feta', category: 'Fladenbrot & Ciabatta', desc: 'Aromatisches Ciabatta, verfeinert mit mild-würzigen Hirtenkäse-Stückchen.' },
+        { id: 'c_oliven', name: 'Ciabatta • Oliven', category: 'Fladenbrot & Ciabatta', desc: 'Italienisches Ciabatta mit ganzen schwarzen Oliven im Teig.' }
+      ];
+
+      // Dips & Aufstriche (exakt nach Foto 2)
+      const DIPS_PART1 = [
+        { id: 'd_tomatenbutter', name: 'Tomatenbutter', category: 'Dips & Aufstriche', desc: 'Cremig aufgeschlagene Butter mit feinen sonnengetrockneten Tomaten & Kräutern.' },
+        { id: 'd_fetacreme', name: 'Fetacreme', category: 'Dips & Aufstriche', desc: 'Samtig gerührter Schafskäse-Aufstrich mit Olivenöl und mediterranen Gewürzen.' },
+        { id: 'd_paprika_feta', name: 'Paprika-Feta', category: 'Dips & Aufstriche', desc: 'Beliebte Kombination aus feurig-gegrillter roter Paprika und mildem Feta.' },
+        { id: 'd_paprika', name: 'Paprika', category: 'Dips & Aufstriche', desc: 'Fruchtig-milder Brotaufstrich aus langsam gerösteten Gemüsepaprika.' },
+        { id: 'd_thunfisch', name: 'Thunfisch', category: 'Dips & Aufstriche', desc: 'Herzhafte, hausgemachte Thunfisch-Creme – perfekt zu frischem Baguette.' }
+      ];
+
+      const DIPS_PART2 = [
+        { id: 'd_aioli', name: 'Aioli', category: 'Dips & Aufstriche', desc: 'Spanische Knoblauchcreme nach Originalrezept – herrlich vollmundig.' },
+        { id: 'd_tomaten_feta', name: 'Tomaten-Feta', category: 'Dips & Aufstriche', desc: 'Aromatischer Aufstrich aus reifen Strauchtomaten und cremigem Schafskäse.' },
+        { id: 'd_baerlauch', name: 'Bärlauch', category: 'Dips & Aufstriche', desc: 'Frische Feinkost-Creme mit kräftigem, aromatischem Wald-Bärlauch.' },
+        { id: 'd_knoblauch', name: 'Knoblauch', category: 'Dips & Aufstriche', desc: 'Klassischer, intensiver Knoblauch-Kräuter-Dip zu allen Brotspezialitäten.' }
+      ];
+
+      const ALL_CATALOG_ITEMS = [...BREADS_CLASSIC, ...BREADS_CIABATTA, ...DIPS_PART1, ...DIPS_PART2];
+
+      // App State
+      let currentView = 'menu';
+      let selectedToppings = new Set();
+      let currentPizzaQty = 1;
+      let cart = []; // [{ uid, itemId, isPizza, name, category, details, qty }]
+      let clearConfirmArmed = false;
+
+      // ==================== RENDER FUNKTIONEN ====================
+
+      function renderPizzaToppings() {
+        const grid = document.getElementById('pizza-toppings-grid');
+        grid.innerHTML = TOPPINGS.map(t => {
+          const active = selectedToppings.has(t.id);
+          return `
+            <button type="button" data-action="toggle-topping" data-id="${t.id}"
+              class="p-3 rounded-xl border-2 text-left transition flex items-start justify-between gap-2 cursor-pointer select-none ${
+                active 
+                  ? 'bg-amber-500/20 border-amber-400 text-white shadow-md' 
+                  : 'bg-stone-950 border-stone-800 hover:border-stone-600 text-stone-100'
+              }">
+              <div class="flex-1 pointer-events-none">
+                <div class="font-bold text-xs sm:text-sm text-white leading-snug whitespace-normal break-words">${t.label}</div>
+                <div class="text-[11px] text-stone-200 font-medium leading-tight whitespace-normal break-words mt-1">${t.sub}</div>
+              </div>
+              <span class="w-6 h-6 rounded-lg flex items-center justify-center text-xs font-black shrink-0 mt-0.5 pointer-events-none ${
+                active ? 'bg-amber-400 text-stone-950' : 'bg-stone-800 text-stone-200'
+              }">
+                ${active ? '✓' : '+'}
+              </span>
+            </button>
+          `;
+        }).join('');
+
+        // SVG Layers aktualisieren
+        TOPPINGS.forEach(t => {
+          const layer = document.getElementById('svg-topping-' + t.id);
+          if (layer) {
+            if (selectedToppings.has(t.id)) {
+              layer.classList.remove('topping-hidden');
+              layer.classList.add('topping-visible');
+            } else {
+              layer.classList.remove('topping-visible');
+              layer.classList.add('topping-hidden');
+            }
+          }
+        });
+
+        const pizzaBox = document.getElementById('pizza-visual-box');
+        if (selectedToppings.has('extra-scharf')) {
+          pizzaBox.classList.add('spicy-active');
+        } else {
+          pizzaBox.classList.remove('spicy-active');
+        }
+
+        // Text-Zusammenfassung komplett ohne Abschneiden
+        const countEl = document.getElementById('pizza-topping-count');
+        const summaryEl = document.getElementById('pizza-live-summary');
+        countEl.textContent = `${selectedToppings.size} gewählt`;
+
+        if (selectedToppings.size === 0) {
+          summaryEl.textContent = 'Klassische Margherita (Tomatensauce & Mozzarella)';
+        } else {
+          summaryEl.textContent = Array.from(selectedToppings)
+            .map(id => TOPPINGS.find(x => x.id === id).label)
+            .join(', ');
+        }
+      }
+
+      function getCatalogItemCartQty(itemId) {
+        const entry = cart.find(c => !c.isPizza && c.itemId === itemId);
+        return entry ? entry.qty : 0;
+      }
+
+      function renderCatalogSection(items, containerId) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+
+        container.innerHTML = items.map(item => {
+          const qtyInCart = getCatalogItemCartQty(item.id);
+          const isSelected = qtyInCart > 0;
+
+          return `
+            <div class="rounded-2xl p-4 border-2 transition flex flex-col justify-between gap-4 ${
+              isSelected 
+                ? 'bg-stone-900 border-amber-500 shadow-lg shadow-amber-500/10' 
+                : 'bg-stone-900 border-stone-800 hover:border-stone-700'
+            }">
+              <div>
+                <div class="flex items-start justify-between gap-2">
+                  <h4 class="text-base font-extrabold text-white leading-snug whitespace-normal break-words">${item.name}</h4>
+                  ${isSelected ? `<span class="bg-amber-500 text-stone-950 text-[11px] font-black px-2 py-0.5 rounded-full shrink-0">${qtyInCart}x im Korb</span>` : ''}
+                </div>
+                <p class="text-stone-100 text-xs sm:text-sm font-medium mt-1.5 leading-relaxed whitespace-normal break-words">${item.desc}</p>
+              </div>
+
+              <div class="pt-3 border-t border-stone-800 flex items-center justify-between gap-2">
+                ${
+                  qtyInCart === 0
+                    ? `<button type="button" data-action="catalog-delta" data-id="${item.id}" data-delta="1"
+                        class="w-full bg-amber-500 hover:bg-amber-400 text-stone-950 font-black py-2.5 px-4 rounded-xl text-xs sm:text-sm shadow transition active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer">
+                        <span class="text-base leading-none pointer-events-none">+</span>
+                        <span class="pointer-events-none">Auswählen (In den Korb)</span>
+                      </button>`
+                    : `<div class="w-full flex items-center justify-between bg-stone-950 border border-amber-500/50 rounded-xl p-1">
+                        <button type="button" data-action="catalog-delta" data-id="${item.id}" data-delta="-1"
+                          class="w-10 h-9 rounded-lg bg-stone-800 hover:bg-red-500/20 hover:text-red-300 text-white font-black text-lg flex items-center justify-center transition active:scale-95 cursor-pointer">
+                          -
+                        </button>
+                        <span class="font-black text-amber-400 text-sm">${qtyInCart} Stück</span>
+                        <button type="button" data-action="catalog-delta" data-id="${item.id}" data-delta="1"
+                          class="w-10 h-9 rounded-lg bg-amber-500 hover:bg-amber-400 text-stone-950 font-black text-lg flex items-center justify-center transition active:scale-95 cursor-pointer">
+                          +
+                        </button>
+                      </div>`
+                }
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      function renderAllCatalogGrids() {
+        renderCatalogSection(BREADS_CLASSIC, 'breads-classic-grid');
+        renderCatalogSection(BREADS_CIABATTA, 'breads-ciabatta-grid');
+        renderCatalogSection(DIPS_PART1, 'dips-part1-grid');
+        renderCatalogSection(DIPS_PART2, 'dips-part2-grid');
+      }
+
+      function renderCartAndBadges() {
+        const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+
+        // Header Badge
+        document.getElementById('header-cart-badge').textContent = totalCount;
+        document.getElementById('cart-summary-badge').textContent = `${totalCount} Artikel`;
+
+        // Floating Bottom Bar
+        const bottomBar = document.getElementById('bottom-cart-bar');
+        const bottomBarCount = document.getElementById('bottom-bar-count');
+        if (totalCount > 0 && currentView !== 'cart' && currentView !== 'success') {
+          bottomBar.classList.remove('hidden');
+          bottomBarCount.textContent = `${totalCount} Artikel im Warenkorb`;
+        } else {
+          bottomBar.classList.add('hidden');
+        }
+
+        // Clear Button
+        const clearBtn = document.getElementById('clear-cart-btn');
+        if (cart.length > 0) {
+          clearBtn.classList.remove('hidden');
+        } else {
+          clearBtn.classList.add('hidden');
+        }
+
+        // Liste im Warenkorb (vollständiger Text ohne Abschneiden)
+        const listEl = document.getElementById('cart-items-list');
+        if (cart.length === 0) {
+          listEl.innerHTML = `
+            <div class="text-center py-10 px-4 border-2 border-dashed border-stone-800 rounded-2xl space-y-3">
+              <div class="text-4xl">🛒</div>
+              <div class="text-base font-extrabold text-white">Dein Warenkorb ist noch leer</div>
+              <p class="text-xs text-stone-200 font-medium">Wähle leckere Pizzen, Baguettes oder Dips aus der Speisekarte.</p>
+              <button type="button" data-action="nav" data-target="menu" class="mt-2 bg-amber-500 hover:bg-amber-400 text-stone-950 font-black px-5 py-2.5 rounded-xl text-xs transition">
+                Zur Speisekarte →
+              </button>
+            </div>
+          `;
+          return;
+        }
+
+        listEl.innerHTML = cart.map(item => `
+          <div class="bg-stone-950 border border-stone-800 p-4 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="flex-1">
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="font-extrabold text-white text-sm sm:text-base">${item.name}</span>
+                <span class="text-[10px] font-bold uppercase bg-amber-500/15 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded-md">${item.category}</span>
+              </div>
+              <p class="text-xs sm:text-sm text-stone-100 font-medium mt-1.5 leading-relaxed whitespace-normal break-words">${item.details}</p>
+            </div>
+
+            <div class="flex items-center justify-end gap-2 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-stone-800">
+              <div class="flex items-center bg-stone-900 border border-stone-700 rounded-lg p-0.5">
+                <button type="button" data-action="cart-uid-delta" data-uid="${item.uid}" data-delta="-1" class="w-8 h-8 rounded text-white hover:bg-stone-800 font-black text-sm flex items-center justify-center">-</button>
+                <span class="w-8 text-center font-black text-amber-400 text-xs">${item.qty}</span>
+                <button type="button" data-action="cart-uid-delta" data-uid="${item.uid}" data-delta="1" class="w-8 h-8 rounded text-white hover:bg-stone-800 font-black text-sm flex items-center justify-center">+</button>
+              </div>
+              <button type="button" data-action="cart-uid-remove" data-uid="${item.uid}" class="w-8 h-8 rounded-lg bg-stone-900 hover:bg-red-500/20 text-stone-200 hover:text-red-400 flex items-center justify-center text-xs font-bold transition" title="Entfernen">
+                ✕
+              </button>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // ==================== NAVIGATION ====================
+      function switchView(target) {
+        currentView = target;
+        ['menu', 'pizza', 'breads', 'dips', 'cart', 'success'].forEach(v => {
+          const section = document.getElementById('view-' + v);
+          if (section) section.classList.toggle('hidden', v !== target);
+
+          const navBtn = document.getElementById('nav-btn-' + v);
+          if (navBtn) {
+            if (v === target) {
+              navBtn.className = 'px-2.5 py-1 rounded-lg font-bold bg-stone-800 text-amber-400 transition';
+            } else {
+              navBtn.className = 'px-2.5 py-1 rounded-lg font-semibold text-stone-200 hover:text-white hover:bg-stone-800 transition';
+            }
+          }
+        });
+
+        renderCartAndBadges();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // ==================== TOAST HELFER ====================
+      let toastTimeout = null;
+      function showToast(msg) {
+        const box = document.getElementById('toast-box');
+        const txt = document.getElementById('toast-text');
+        txt.textContent = msg;
+        box.classList.remove('opacity-0', '-translate-y-2');
+        box.classList.add('opacity-100', 'translate-y-0');
+        if (toastTimeout) clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(() => {
+          box.classList.remove('opacity-100', 'translate-y-0');
+          box.classList.add('opacity-0', '-translate-y-2');
+        }, 2200);
+      }
+
+      // ==================== ZENTRALE KLICK-STEUERUNG (EVENT DELEGATION) ====================
+      document.addEventListener('click', function(e) {
+        const btn = e.target.closest('[data-action]');
+        if (!btn) return;
+
+        const action = btn.getAttribute('data-action');
+
+        // 1. Navigation
+        if (action === 'nav') {
+          const target = btn.getAttribute('data-target');
+          switchView(target);
+          return;
+        }
+
+        // 2. Pizza-Zutat umschalten
+        if (action === 'toggle-topping') {
+          const id = btn.getAttribute('data-id');
+          if (selectedToppings.has(id)) {
+            selectedToppings.delete(id);
+          } else {
+            selectedToppings.add(id);
+          }
+          renderPizzaToppings();
+          return;
+        }
+
+        // 3. Pizza-Belag zurücksetzen
+        if (action === 'reset-pizza') {
+          selectedToppings.clear();
+          currentPizzaQty = 1;
+          document.getElementById('pizza-qty-display').textContent = '1';
+          renderPizzaToppings();
+          showToast('Pizza-Belag zurückgesetzt');
+          return;
+        }
+
+        // 4. Pizza-Anzahl ändern
+        if (action === 'pizza-qty') {
+          const delta = parseInt(btn.getAttribute('data-delta'), 10);
+          currentPizzaQty = Math.max(1, currentPizzaQty + delta);
+          document.getElementById('pizza-qty-display').textContent = currentPizzaQty;
+          return;
+        }
+
+        // 5. Konfigurierte Pizza in den Warenkorb
+        if (action === 'add-pizza') {
+          const labels = Array.from(selectedToppings).map(id => TOPPINGS.find(t => t.id === id).label);
+          const detailsText = labels.length > 0 ? `Zutaten: ${labels.join(', ')}` : 'Klassische Margherita (Tomatensauce & Mozzarella)';
+
+          cart.push({
+            uid: 'p_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+            itemId: 'custom_pizza',
+            isPizza: true,
+            name: 'Steinofen-Pizza (32 cm)',
+            category: 'Pizza',
+            details: detailsText,
+            qty: currentPizzaQty
+          });
+
+          selectedToppings.clear();
+          currentPizzaQty = 1;
+          document.getElementById('pizza-qty-display').textContent = '1';
+          renderPizzaToppings();
+          renderCartAndBadges();
+          showToast('🍕 Pizza zum Warenkorb hinzugefügt!');
+          return;
+        }
+
+        // 6. Brot / Dip direkt hinzufügen oder Menge ändern
+        if (action === 'catalog-delta') {
+          const itemId = btn.getAttribute('data-id');
+          const delta = parseInt(btn.getAttribute('data-delta'), 10);
+          const catalogItem = ALL_CATALOG_ITEMS.find(i => i.id === itemId);
+          if (!catalogItem) return;
+
+          let existing = cart.find(c => !c.isPizza && c.itemId === itemId);
+          if (existing) {
+            existing.qty += delta;
+            if (existing.qty <= 0) {
+              cart = cart.filter(c => c.uid !== existing.uid);
+              showToast(`${catalogItem.name} entfernt`);
+            } else {
+              showToast(`${existing.qty}x ${catalogItem.name} im Korb`);
+            }
+          } else if (delta > 0) {
+            cart.push({
+              uid: 'c_' + itemId,
+              itemId: itemId,
+              isPizza: false,
+              name: catalogItem.name,
+              category: catalogItem.category,
+              details: catalogItem.desc,
+              qty: delta
+            });
+            showToast(`1x ${catalogItem.name} hinzugefügt!`);
+          }
+
+          renderAllCatalogGrids();
+          renderCartAndBadges();
+          return;
+        }
+
+        // 7. Artikelmenge im Warenkorb ändern
+        if (action === 'cart-uid-delta') {
+          const uid = btn.getAttribute('data-uid');
+          const delta = parseInt(btn.getAttribute('data-delta'), 10);
+          const entry = cart.find(c => c.uid === uid);
+          if (entry) {
+            entry.qty += delta;
+            if (entry.qty <= 0) {
+              cart = cart.filter(c => c.uid !== uid);
+            }
+            renderAllCatalogGrids();
+            renderCartAndBadges();
+          }
+          return;
+        }
+
+        // 8. Artikel aus Warenkorb löschen
+        if (action === 'cart-uid-remove') {
+          const uid = btn.getAttribute('data-uid');
+          cart = cart.filter(c => c.uid !== uid);
+          renderAllCatalogGrids();
+          renderCartAndBadges();
+          showToast('Artikel entfernt');
+          return;
+        }
+
+        // 9. Warenkorb komplett leeren (ohne blockierendes confirm-Popup)
+        if (action === 'clear-cart') {
+          if (!clearConfirmArmed) {
+            clearConfirmArmed = true;
+            btn.textContent = '⚠️ Wirklich leeren? Hier tippen';
+            btn.classList.add('text-red-400', 'border-red-500');
+            setTimeout(() => {
+              clearConfirmArmed = false;
+              btn.textContent = '🗑️ Warenkorb leeren';
+              btn.classList.remove('text-red-400', 'border-red-500');
+            }, 3500);
+          } else {
+            clearConfirmArmed = false;
+            cart = [];
+            btn.textContent = '🗑️ Warenkorb leeren';
+            btn.classList.remove('text-red-400', 'border-red-500');
+            renderAllCatalogGrids();
+            renderCartAndBadges();
+            showToast('Warenkorb geleert');
+          }
+          return;
+        }
+
+        // 10. Neue Bestellung starten
+        if (action === 'new-order') {
+          document.getElementById('checkout-form').reset();
+          switchView('menu');
+          return;
+        }
+      });
+
+      // ==================== BESTELLUNG ABSENDEN (WEB3FORMS) ====================
+      document.getElementById('checkout-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const errorBox = document.getElementById('form-error-box');
+        errorBox.classList.add('hidden');
+
+        if (cart.length === 0) {
+          errorBox.textContent = 'Dein Warenkorb ist noch leer. Bitte wähle zuerst mindestens einen Artikel aus.';
+          errorBox.classList.remove('hidden');
+          return;
+        }
+
+        const name = document.getElementById('cust-name').value.trim();
+        const phone = document.getElementById('cust-phone').value.trim() || 'Nicht angegeben';
+        const date = document.getElementById('cust-date').value || 'Nicht angegeben';
+        const time = document.getElementById('cust-time').value || 'Nicht angegeben';
+        const notes = document.getElementById('cust-notes').value.trim() || 'Keine';
+
+        const submitBtn = document.getElementById('submit-order-btn');
+        const submitText = document.getElementById('submit-order-text');
+        submitBtn.disabled = true;
+        submitText.textContent = 'Wird an Patrick gesendet...';
+
+        const totalUnits = cart.reduce((s, i) => s + i.qty, 0);
+        const orderLines = cart.map((item, idx) => `${idx + 1}. [${item.qty}x] ${item.name} (${item.category})\n   ${item.details}`).join('\n\n');
+
+        const emailBody = 
+`Neue Bestellung bei Charlys Backstube!
+========================================
+Kunde:              ${name}
+Telefonnummer:      ${phone}
+Abhol-/Lieferdatum: ${date}
+Uhrzeit:            ${time}
+Anmerkungen:        ${notes}
+
+BESTELLTE ARTIKEL (${totalUnits} Gesamt):
+----------------------------------------
+${orderLines}
+========================================`;
+
+        try {
+          const response = await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "Accept": "application/json" },
+            body: JSON.stringify({
+              access_key: WEB3FORMS_KEY,
+              subject: `🥖 Neue Bestellung von ${name} (${totalUnits} Artikel) – Charlys Backstube`,
+              from_name: "Charlys Backstube Web-App",
+              name: name,
+              message: emailBody
+            })
+          });
+
+          const data = await response.json();
+          if (response.ok && data.success) {
+            document.getElementById('success-summary-box').innerHTML = `
+              <div class="font-bold text-amber-400 mb-1">Zusammenfassung für ${name}:</div>
+              ${cart.map(i => `<div>• <strong>${i.qty}x ${i.name}</strong> — ${i.details}</div>`).join('')}
+            `;
+            cart = [];
+            renderAllCatalogGrids();
+            renderCartAndBadges();
+            switchView('success');
+          } else {
+            throw new Error(data.message || 'Fehler bei der Übermittlung.');
+          }
+        } catch (err) {
+          errorBox.textContent = 'Senden fehlgeschlagen: Bitte prüfe kurz deine Internetverbindung und versuche es erneut.';
+          errorBox.classList.remove('hidden');
+        } finally {
+          submitBtn.disabled = false;
+          submitText.textContent = 'Bestellung jetzt absenden';
+        }
+      });
+
+      // Initialer Start
+      renderPizzaToppings();
+      renderAllCatalogGrids();
+      renderCartAndBadges();
+    })();
+  </script>
+</body>
+</html>
