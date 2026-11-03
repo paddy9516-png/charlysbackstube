@@ -121,4 +121,552 @@
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        <div class="lg:col-span-5 bg-stone-900 border border-stone-800 p-5 rounded-2xl flex flex-col items-center shadow
+        <div class="lg:col-span-5 bg-stone-900 border border-stone-800 p-5 rounded-2xl flex flex-col items-center shadow-xl">
+          <div id="pizza-container" class="relative w-56 h-56 sm:w-64 sm:h-64 select-none pointer-events-none">
+            <svg viewBox="0 0 300 300" class="w-full h-full drop-shadow-2xl">
+              <circle cx="150" cy="150" r="142" fill="#b45309" />
+              <circle cx="150" cy="150" r="136" fill="#d97706" />
+              <circle cx="150" cy="150" r="124" fill="#b91c1c" />
+              <circle cx="150" cy="150" r="118" fill="#fef08a" opacity="0.94" />
+
+              <g id="layer-thunfisch" class="topping topping-enter"><path d="M100 95 Q115 85 125 100 T110 115 Z" fill="#9ca3af"/><path d="M185 175 Q200 160 210 180 T195 195 Z" fill="#9ca3af"/><path d="M125 185 Q140 175 145 190 T130 200 Z" fill="#9ca3af"/></g>
+              <g id="layer-schinken" class="topping topping-enter"><rect x="85" y="125" width="28" height="20" rx="3" fill="#f472b6" opacity="0.9"/><rect x="175" y="95" width="30" height="22" rx="3" fill="#f472b6" opacity="0.9"/><rect x="135" y="195" width="32" height="18" rx="3" fill="#f472b6" opacity="0.9"/></g>
+              <g id="layer-salami" class="topping topping-enter"><circle cx="95" cy="95" r="16" fill="#991b1b" stroke="#7f1d1d" stroke-width="2"/><circle cx="205" cy="135" r="17" fill="#991b1b" stroke="#7f1d1d" stroke-width="2"/><circle cx="115" cy="195" r="16" fill="#991b1b" stroke="#7f1d1d" stroke-width="2"/><circle cx="155" cy="135" r="18" fill="#991b1b" stroke="#7f1d1d" stroke-width="2"/></g>
+              <g id="layer-oliven" class="topping topping-enter"><circle cx="160" cy="95" r="7" fill="#1c1917"/><circle cx="100" cy="165" r="7" fill="#1c1917"/><circle cx="180" cy="165" r="7" fill="#1c1917"/><circle cx="135" cy="115" r="7" fill="#1c1917"/></g>
+              <g id="layer-garnelen" class="topping topping-enter"><path d="M75 145 C70 130 90 125 95 135 C97 140 87 145 75 145" fill="#fb7185" stroke="#f43f5e" stroke-width="2"/><path d="M190 80 C185 65 205 60 210 70 C212 75 202 80 190 80" fill="#fb7185" stroke="#f43f5e" stroke-width="2"/><path d="M165 210 C160 195 180 190 185 200 C187 205 177 210 165 210" fill="#fb7185" stroke="#f43f5e" stroke-width="2"/></g>
+              <g id="layer-muscheln" class="topping topping-enter"><path d="M130 75 Q140 60 150 75 Q140 85 130 75" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/><path d="M210 175 Q220 160 230 175 Q220 185 210 175" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/><path d="M95 195 Q105 180 115 195 Q105 205 95 195" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/></g>
+              <g id="layer-ananas" class="topping topping-enter"><polygon points="120,135 130,120 140,135" fill="#facc15" stroke="#ca8a04" stroke-width="1.5"/><polygon points="175,120 185,105 195,120" fill="#facc15" stroke="#ca8a04" stroke-width="1.5"/><polygon points="150,165 160,150 170,165" fill="#facc15" stroke="#ca8a04" stroke-width="1.5"/></g>
+              <g id="layer-extra-scharf" class="topping topping-enter"><path d="M145 105 Q150 90 155 105 Q150 120 145 105" fill="#dc2626"/><path d="M110 140 Q115 125 120 140 Q115 155 110 140" fill="#dc2626"/><path d="M175 140 Q180 125 185 140 Q180 155 175 140" fill="#dc2626"/><path d="M140 185 Q145 170 150 185 Q145 200 140 185" fill="#dc2626"/></g>
+              <g id="layer-feta" class="topping topping-enter"><rect x="145" y="115" width="13" height="13" fill="#ffffff" stroke="#e5e7eb" stroke-width="1.5" rx="2"/><rect x="95" y="145" width="14" height="14" fill="#ffffff" stroke="#e5e7eb" stroke-width="1.5" rx="2"/><rect x="180" y="145" width="13" height="13" fill="#ffffff" stroke="#e5e7eb" stroke-width="1.5" rx="2"/><rect x="135" y="165" width="14" height="14" fill="#ffffff" stroke="#e5e7eb" stroke-width="1.5" rx="2"/></g>
+              <g id="layer-champignons" class="topping topping-enter"><path d="M125 100 C125 90 145 90 145 100 L140 108 L130 108 Z" fill="#d6d3d1" stroke="#a8a29e" stroke-width="1.5"/><path d="M175 180 C175 170 195 170 195 180 L190 188 L180 188 Z" fill="#d6d3d1" stroke="#a8a29e" stroke-width="1.5"/><path d="M85 110 C85 100 105 100 105 110 L100 118 L90 118 Z" fill="#d6d3d1" stroke="#a8a29e" stroke-width="1.5"/></g>
+              <g id="layer-peperoni" class="topping topping-enter"><path d="M110 120 Q125 115 135 125" stroke="#16a34a" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M165 170 Q180 160 190 175" stroke="#16a34a" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M100 175 Q115 165 120 180" stroke="#16a34a" stroke-width="5" fill="none" stroke-linecap="round"/></g>
+              <g id="layer-zwiebeln" class="topping topping-enter"><path d="M140 85 A 25 25 0 0 1 170 95" stroke="#c084fc" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M90 135 A 25 25 0 0 1 115 160" stroke="#c084fc" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M145 190 A 25 25 0 0 1 175 205" stroke="#c084fc" stroke-width="3" fill="none" stroke-linecap="round"/></g>
+              <g id="layer-knoblauch" class="topping topping-enter"><circle cx="130" cy="140" r="3" fill="#fef9c3"/><circle cx="165" cy="110" r="3" fill="#fef9c3"/><circle cx="170" cy="160" r="3" fill="#fef9c3"/><circle cx="115" cy="170" r="3" fill="#fef9c3"/></g>
+              <g id="layer-parmesan" class="topping topping-enter"><line x1="120" y1="125" x2="135" y2="128" stroke="#fef08a" stroke-width="2.5" stroke-linecap="round"/><line x1="155" y1="145" x2="170" y2="148" stroke-width="2.5" stroke-linecap="round"/><line x1="135" y1="175" x2="150" y2="178" stroke="#fef08a" stroke-width="2.5" stroke-linecap="round"/></g>
+              <g id="layer-paprika" class="topping topping-enter"><path d="M130 95 Q145 105 135 115" stroke="#ef4444" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M185 125 Q175 135 185 145" stroke="#eab308" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M105 150 Q115 160 105 170" stroke="#ef4444" stroke-width="4.5" fill="none" stroke-linecap="round"/></g>
+              <g id="layer-mais" class="topping topping-enter"><circle cx="140" cy="120" r="4" fill="#fbbf24"/><circle cx="148" cy="122" r="3.5" fill="#f59e0b"/><circle cx="165" cy="130" r="4" fill="#fbbf24"/><circle cx="120" cy="155" r="4" fill="#fbbf24"/><circle cx="175" cy="180" r="4" fill="#fbbf24"/></g>
+            </svg>
+          </div>
+          <div class="mt-4 text-xs font-semibold text-stone-200 text-center whitespace-normal break-words">
+            Auswahl: <span id="pizza-summary" class="text-amber-400">Margherita (Standard)</span>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7 bg-stone-900 border border-stone-800 p-5 rounded-2xl shadow-xl space-y-4">
+          <h3 class="font-bold text-stone-100 text-sm">Zutaten antippen zum Auswählen:</h3>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2" id="toppings-container"></div>
+          <div class="pt-3 border-t border-stone-800">
+            <button type="button" onclick="commitPizza()" class="w-full bg-amber-500 hover:bg-amber-400 text-stone-950 font-black py-2.5 px-4 rounded-xl text-sm transition shadow flex items-center justify-center gap-2 active:scale-95">
+              <span>🍕</span>
+              <span>Diese Pizza in den Warenkorb</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 3: BROTE -->
+    <section id="view-breads" class="hidden space-y-6">
+      <div class="flex items-center justify-between border-b border-stone-800 pb-3">
+        <div>
+          <button type="button" onclick="switchView('menu')" class="text-xs text-amber-400 hover:underline flex items-center gap-1 mb-1 font-semibold">← Zurück zum Menü</button>
+          <h2 class="text-xl sm:text-2xl font-black text-stone-100">Baguette- & Brot-Auswahl</h2>
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider">Klassiker & Spezialitäten</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3" id="breads-classic-list"></div>
+      </div>
+
+      <div class="space-y-3 pt-4 border-t border-stone-800">
+        <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider">Fladenbrot & Ciabatta</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3" id="breads-ciabatta-list"></div>
+      </div>
+    </section>
+
+    <!-- VIEW 4: DIPS -->
+    <section id="view-dips" class="hidden space-y-6">
+      <div class="flex items-center justify-between border-b border-stone-800 pb-3">
+        <div>
+          <button type="button" onclick="switchView('menu')" class="text-xs text-amber-400 hover:underline flex items-center gap-1 mb-1 font-semibold">← Zurück zum Menü</button>
+          <h2 class="text-xl sm:text-2xl font-black text-stone-100">Frische Dips & Brotaufstriche</h2>
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider">Cremes & Aufstriche (Teil 1)</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3" id="dips-part1-list"></div>
+      </div>
+
+      <div class="space-y-3 pt-4 border-t border-stone-800">
+        <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider">Cremes & Aufstriche (Teil 2)</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3" id="dips-part2-list"></div>
+      </div>
+    </section>
+
+    <!-- VIEW 5: BALD VERFÜGBAR -->
+    <section id="view-coming" class="hidden space-y-6">
+      <div class="flex items-center justify-between border-b border-stone-800 pb-3">
+        <div>
+          <button type="button" onclick="switchView('menu')" class="text-xs text-amber-400 hover:underline flex items-center gap-1 mb-1 font-semibold">← Zurück zum Menü</button>
+          <h2 class="text-xl sm:text-2xl font-black text-stone-100">Bald verfügbar</h2>
+        </div>
+      </div>
+
+      <div class="bg-stone-900 border border-stone-800 p-6 rounded-2xl text-center space-y-3 shadow-xl max-w-lg mx-auto">
+        <div class="w-14 h-14 bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded-2xl flex items-center justify-center text-2xl mx-auto">🚀</div>
+        <h3 class="text-lg font-bold text-stone-100">Neue Ofen-Highlights im Anmarsch</h3>
+        <p class="text-stone-200 text-xs leading-relaxed font-medium">Wir tüfteln ständig an neuen Rezepturen für Charlys Backstube. Hier erfährst du demnächst als Erster, welche Leckereien bald fest in die Vorbestellung aufgenommen werden!</p>
+      </div>
+
+      <div class="space-y-3 pt-2">
+        <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider">Geplante Innovationen</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="coming-soon-list"></div>
+      </div>
+    </section>
+
+    <!-- VIEW 6: WARENKORB -->
+    <section id="view-cart" class="hidden space-y-6">
+      <div class="flex items-center justify-between border-b border-stone-800 pb-3">
+        <div>
+          <button type="button" onclick="switchView('menu')" class="text-xs text-amber-400 hover:underline flex items-center gap-1 mb-1 font-semibold">← Zurück zum Menü</button>
+          <h2 class="text-xl sm:text-2xl font-black text-stone-100">Dein Warenkorb</h2>
+        </div>
+        <button type="button" onclick="emptyCart()" class="text-xs text-stone-300 hover:text-red-400 font-medium">Korb leeren</button>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <div class="lg:col-span-7 bg-stone-900 border border-stone-800 p-5 rounded-2xl shadow-xl space-y-4">
+          <div id="cart-list" class="space-y-2"></div>
+          <div class="pt-3 border-t border-stone-800 flex justify-between items-center text-xs text-stone-200">
+            <span>Gesamtanzahl Artikel:</span>
+            <span id="cart-total" class="font-bold text-amber-400 text-sm">0 Stück</span>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 bg-stone-900 border border-stone-800 p-5 rounded-2xl shadow-xl">
+          <h3 class="font-bold text-sm text-stone-200 mb-3">Bestelldaten eingeben:</h3>
+          <form id="order-form" onsubmit="handleOrderSubmit(event)" class="space-y-3">
+            <div>
+              <label class="block text-xs font-semibold text-stone-200 mb-1">Name / Kunde <span class="text-amber-500">*</span></label>
+              <input type="text" id="cust-name" required placeholder="z. B. Patrick Conen" class="w-full bg-stone-950 border border-stone-700 focus:border-amber-500 rounded-lg px-3 py-2 text-sm text-stone-100 focus:outline-none">
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-stone-200 mb-1">Telefonnummer (optional)</label>
+              <input type="tel" id="cust-phone" placeholder="z. B. 0170 1234567" class="w-full bg-stone-950 border border-stone-700 focus:border-amber-500 rounded-lg px-3 py-2 text-sm text-stone-100 focus:outline-none">
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-xs font-semibold text-stone-200 mb-1">Abhol-/Lieferdatum</label>
+                <input type="date" id="cust-date" class="w-full bg-stone-950 border border-stone-700 focus:border-amber-500 rounded-lg px-2.5 py-2 text-xs text-stone-100 focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-stone-200 mb-1">Uhrzeit</label>
+                <input type="time" id="cust-time" class="w-full bg-stone-950 border border-stone-700 focus:border-amber-500 rounded-lg px-2.5 py-2 text-xs text-stone-100 focus:outline-none">
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-stone-200 mb-1">Anmerkungen / Wünsche</label>
+              <textarea id="cust-notes" rows="2" placeholder="z. B. Ciabatta nicht schneiden..." class="w-full bg-stone-950 border border-stone-700 focus:border-amber-500 rounded-lg px-3 py-2 text-sm text-stone-100 focus:outline-none resize-none"></textarea>
+            </div>
+
+            <button type="submit" id="submit-btn" class="w-full bg-amber-500 hover:bg-amber-400 text-stone-950 font-black py-3 rounded-xl text-sm transition shadow flex items-center justify-center gap-2 active:scale-95">
+              <span>🥖</span>
+              <span>Bestellung absenden</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 7: ERFOLG -->
+    <section id="view-success" class="hidden text-center py-12 max-w-md mx-auto space-y-4">
+      <div class="w-16 h-16 bg-amber-500/20 text-amber-400 border border-amber-500/40 rounded-full flex items-center justify-center text-3xl mx-auto">✓</div>
+      <h2 class="text-2xl font-black text-stone-100">Bestellung ist raus!</h2>
+      <p class="text-stone-200 text-sm leading-relaxed font-medium">Deine Daten wurden direkt an Patrick übermittelt.</p>
+      <div class="pt-4">
+        <button type="button" onclick="startNew()" class="bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold px-6 py-2 rounded-xl text-xs">
+          Neue Auswahl starten
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    const TOPPINGS = [
+      { id: 'thunfisch', label: '🐟 Thunfisch' },
+      { id: 'schinken', label: '🍖 Schinken' },
+      { id: 'salami', label: '🥓 Salami' },
+      { id: 'oliven', label: '🫒 Oliven' },
+      { id: 'garnelen', label: '🦐 Garnelen' },
+      { id: 'muscheln', label: '🦪 Muscheln' },
+      { id: 'ananas', label: '🍍 Ananas' },
+      { id: 'extra-scharf', label: '🔥 Extra Scharf' },
+      { id: 'feta', label: '🧀 Feta' },
+      { id: 'champignons', label: '🍄 Champignons' },
+      { id: 'peperoni', label: '🌶️ Peperoni' },
+      { id: 'zwiebeln', label: '🧅 Zwiebeln' },
+      { id: 'knoblauch', label: '🧄 Knoblauch' },
+      { id: 'parmesan', label: '🧀 Parmesan' },
+      { id: 'paprika', label: '🫑 Paprika' },
+      { id: 'mais', label: '🌽 Mais' }
+    ];
+
+    const BROTE_KLASSIKER = [
+      { id: 'b_zwiebel', name: 'Zwiebel Baguette', desc: 'Mit aromatischen Röst- und Frühlingszwiebeln' },
+      { id: 'b_kaese_oregano', name: 'Käse Oregano', desc: 'Herzhafte Käsekruste & mediterraner Oregano' },
+      { id: 'b_koerner', name: 'Körner Baguette', desc: 'Sesam, Leinsamen & Sonnenblumenkerne' },
+      { id: 'b_laugen', name: 'Laugen Baguette', desc: 'Laugenkruste mit feinem Hagelsalz' },
+      { id: 'b_walnuss', name: 'Walnuss Baguette', desc: 'Knackige geröstete Walnussstücke' },
+      { id: 'b_zupfbrot', name: 'Zupfbrot', desc: 'Frisch gebacken mit feiner Kräuterbutter' }
+    ];
+
+    const BROTE_CIABATTA = [
+      { id: 'c_fladenbrot', name: 'Fladenbrot', desc: 'Fluffiges Brot mit Sesam & Schwarzkümmel' },
+      { id: 'c_basis', name: 'Ciabatta (Basis)', desc: 'Italienisches Ciabatta mit knuspriger Kruste' },
+      { id: 'c_tomate', name: 'Ciabatta Tomate', desc: 'Eingebackene sonnengetrocknete Tomaten' },
+      { id: 'c_parmesan', name: 'Ciabatta Parmesan', desc: 'Mit gereiftem Parmesan gratiniert' },
+      { id: 'c_feta', name: 'Ciabatta Feta', desc: 'Mediterran mit cremigem Hirtenkäse' },
+      { id: 'c_oliven', name: 'Ciabatta Oliven', desc: 'Schwarze Kalamata-Oliven' }
+    ];
+
+    const DIPS_1 = [
+      { id: 'd_tomatenbutter', name: 'Tomatenbutter', desc: 'Aufgeschlagen mit sonnengetrockneten Tomaten' },
+      { id: 'd_fetacreme', name: 'Fetacreme', desc: 'Cremiger Schafskäse mit frischen Kräutern' },
+      { id: 'd_paprika_feta', name: 'Paprika-Feta', desc: 'Gegrillte Paprika & Feta' },
+      { id: 'd_paprika', name: 'Paprika Creme', desc: 'Feinfruchtiger Aufstrich aus Gemüsepaprika' },
+      { id: 'd_thunfisch', name: 'Thunfisch Creme', desc: 'Würzige Mousse mit feinen Kapern' }
+    ];
+
+    const DIPS_2 = [
+      { id: 'd_aioli', name: 'Aioli', desc: 'Spanische Knoblauchcreme, samtig gerührt' },
+      { id: 'd_tomaten_feta', name: 'Tomaten-Feta Dip', desc: 'Fruchtig-würziger Tomaten-Schafskäsedip' },
+      { id: 'd_baerlauch', name: 'Bärlauch Creme', desc: 'Saisonal mit aromatischem Wald-Bärlauch' },
+      { id: 'd_knoblauch', name: 'Knoblauch Dip', desc: 'Intensive Knoblauch-Kräuter-Creme' }
+    ];
+
+    const COMING_SOON = [
+      { name: 'Gefüllte Pizza-Brötchen', desc: 'Mit Schmelzkäse und Schinken gefüllt' },
+      { name: 'Süße Zimtschnecken', desc: 'Frisch aus dem Ofen mit Vanilleglasur' },
+      { name: 'Knoblauch-Käse-Stangen', desc: 'Gebürstet mit warmer Knoblauchbutter' },
+      { name: 'Italienisches Panini', desc: 'Gegrillt mit Mozzarella & Pesto' }
+    ];
+
+    let selectedToppings = new Set();
+    let cart = [];
+    const itemQuantities = {};
+
+    function switchView(viewName) {
+      ['menu', 'pizza', 'breads', 'dips', 'coming', 'cart', 'success'].forEach(v => {
+        const el = document.getElementById('view-' + v);
+        if (el) el.classList.add('hidden');
+      });
+      const target = document.getElementById('view-' + viewName);
+      if (target) target.classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function initToppings() {
+      const container = document.getElementById('toppings-container');
+      container.innerHTML = '';
+
+      TOPPINGS.forEach(t => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.id = 'top-btn-' + t.id;
+        btn.className = 'p-2 rounded-xl border border-stone-800 bg-stone-950 text-xs text-stone-200 hover:border-stone-600 transition flex items-center justify-between text-left cursor-pointer select-none';
+        btn.innerHTML = `<span class="truncate font-medium">${t.label}</span><span id="top-sign-${t.id}" class="text-stone-500 font-bold ml-1">+</span>`;
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          toggleTopping(t.id);
+        });
+        container.appendChild(btn);
+      });
+    }
+
+    function toggleTopping(id) {
+      const btn = document.getElementById('top-btn-' + id);
+      const sign = document.getElementById('top-sign-' + id);
+      const layer = document.getElementById('layer-' + id);
+
+      if (selectedToppings.has(id)) {
+        selectedToppings.delete(id);
+        btn.classList.remove('bg-amber-500/20', 'border-amber-500', 'text-amber-300');
+        sign.textContent = '+';
+        sign.className = 'text-stone-500 font-bold ml-1';
+        if (layer) {
+          layer.classList.remove('topping-visible');
+          layer.classList.add('topping-enter');
+        }
+        if (id === 'extra-scharf') document.getElementById('pizza-container').classList.remove('spicy-pulse');
+      } else {
+        selectedToppings.add(id);
+        btn.classList.add('bg-amber-500/20', 'border-amber-500', 'text-amber-300');
+        sign.textContent = '✓';
+        sign.className = 'text-amber-400 font-bold ml-1';
+        if (layer) {
+          layer.classList.remove('topping-enter');
+          layer.classList.add('topping-visible');
+        }
+        if (id === 'extra-scharf') document.getElementById('pizza-container').classList.add('spicy-pulse');
+      }
+
+      const summary = document.getElementById('pizza-summary');
+      if (selectedToppings.size === 0) {
+        summary.textContent = 'Margherita (Standard)';
+      } else {
+        summary.textContent = Array.from(selectedToppings).map(tid => TOPPINGS.find(x => x.id === tid).label).join(', ');
+      }
+    }
+
+    function resetToppings() {
+      Array.from(selectedToppings).forEach(id => toggleTopping(id));
+    }
+
+    function commitPizza() {
+      const names = Array.from(selectedToppings).map(id => TOPPINGS.find(t => t.id === id).label);
+      const details = names.length > 0 ? names.join(', ') : 'Margherita (ohne Extras)';
+
+      cart.push({
+        id: 'pizza_' + Date.now(),
+        type: 'Pizza (32cm)',
+        title: `Wunsch-Pizza (#${cart.filter(c => c.type.startsWith('Pizza')).length + 1})`,
+        details: details,
+        count: 1
+      });
+
+      resetToppings();
+      renderCart();
+      switchView('cart');
+    }
+
+    function renderCardList(items, containerId, category) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+
+      items.forEach(item => {
+        itemQuantities[item.id] = 1;
+
+        const card = document.createElement('div');
+        card.className = 'bg-stone-950 border border-stone-800 p-4 rounded-xl flex flex-col justify-between hover:border-stone-700 transition space-y-3';
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between">
+              <h4 class="font-bold text-stone-100 text-sm">${item.name}</h4>
+              <span class="text-[10px] uppercase font-bold text-amber-400/90 bg-amber-400/10 px-1.5 py-0.5 rounded">${category}</span>
+            </div>
+            <p class="text-stone-200 text-xs mt-1.5 leading-snug font-medium whitespace-normal break-words">${item.desc}</p>
+          </div>
+          <div class="flex items-center justify-between pt-2 border-t border-stone-900">
+            <span class="text-[11px] text-stone-200 font-semibold">Anzahl:</span>
+            <div class="flex items-center gap-1.5">
+              <div class="flex items-center border border-stone-700 rounded-lg overflow-hidden bg-stone-900">
+                <button type="button" onclick="adjustItemQty('${item.id}', -1)" class="px-2 py-0.5 text-xs text-stone-300 hover:bg-stone-800 active:bg-stone-700 font-bold">-</button>
+                <span id="qty-val-${item.id}" class="px-2 py-0.5 text-xs font-bold text-white bg-stone-950 min-w-[20px] text-center">1</span>
+                <button type="button" onclick="adjustItemQty('${item.id}', 1)" class="px-2 py-0.5 text-xs text-stone-300 hover:bg-stone-800 active:bg-stone-700 font-bold">+</button>
+              </div>
+              <button type="button" onclick="addItemToCart('${item.id}', '${item.name}', '${category}')" class="bg-amber-500 hover:bg-amber-400 text-stone-950 px-2.5 py-1 rounded-lg text-xs font-bold transition active:scale-95 shadow">
+                + Korb
+              </button>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function renderComingSoonList() {
+      const container = document.getElementById('coming-soon-list');
+      container.innerHTML = '';
+      COMING_SOON.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'bg-stone-950 border border-stone-800 p-4 rounded-xl space-y-1.5 opacity-90';
+        card.innerHTML = `
+          <div class="flex items-center justify-between">
+            <h4 class="font-bold text-stone-100 text-sm">${item.name}</h4>
+            <span class="text-[10px] uppercase font-bold text-amber-400 bg-amber-400/10 px-1.5 py-0.5 rounded">In Kürze</span>
+          </div>
+          <p class="text-stone-200 text-xs leading-snug font-medium whitespace-normal break-words">${item.desc}</p>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function adjustItemQty(id, delta) {
+      let current = itemQuantities[id] || 1;
+      current += delta;
+      if (current < 1) current = 1;
+      itemQuantities[id] = current;
+      const el = document.getElementById('qty-val-' + id);
+      if (el) el.textContent = current;
+    }
+
+    function addItemToCart(id, name, category) {
+      const qty = itemQuantities[id] || 1;
+      const existing = cart.find(c => c.id === id);
+
+      if (existing) {
+        existing.count += qty;
+      } else {
+        cart.push({
+          id: id,
+          type: category,
+          title: name,
+          details: category,
+          count: qty
+        });
+      }
+
+      itemQuantities[id] = 1;
+      const el = document.getElementById('qty-val-' + id);
+      if (el) el.textContent = 1;
+
+      renderCart();
+      switchView('cart');
+    }
+
+    function renderCart() {
+      const list = document.getElementById('cart-list');
+      const badge = document.getElementById('header-cart-badge');
+      const total = document.getElementById('cart-total');
+
+      const count = cart.reduce((sum, item) => sum + item.count, 0);
+      badge.textContent = count;
+      total.textContent = `${count} Position(en)`;
+
+      if (cart.length === 0) {
+        list.innerHTML = `
+          <div class="text-center py-8 text-stone-300">
+            <p class="text-2xl mb-1">🛒</p>
+            <p class="text-xs font-medium">Dein Warenkorb ist noch leer.</p>
+            <button type="button" onclick="switchView('menu')" class="mt-3 text-xs text-amber-400 hover:underline font-bold">Jetzt Spezialitäten auswählen →</button>
+          </div>
+        `;
+        return;
+      }
+
+      list.innerHTML = '';
+      cart.forEach((item, idx) => {
+        const row = document.createElement('div');
+        row.className = 'bg-stone-950 border border-stone-800 p-3 rounded-xl flex items-center justify-between gap-3';
+        row.innerHTML = `
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold text-stone-100">${item.title}</span>
+              <span class="text-[10px] text-amber-400 bg-amber-400/10 px-1.5 py-0.2 rounded font-medium">${item.type}</span>
+            </div>
+            <p class="text-[11px] text-stone-300 mt-0.5 font-medium whitespace-normal break-words">${item.details}</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="flex items-center border border-stone-700 rounded-lg overflow-hidden bg-stone-900">
+              <button type="button" onclick="modCartCount(${idx}, -1)" class="px-2 py-0.5 text-xs text-stone-300 hover:bg-stone-800 font-bold">-</button>
+              <span class="px-2 py-0.5 text-xs font-bold text-white bg-stone-950">${item.count}</span>
+              <button type="button" onclick="modCartCount(${idx}, 1)" class="px-2 py-0.5 text-xs text-stone-300 hover:bg-stone-800 font-bold">+</button>
+            </div>
+            <button type="button" onclick="dropCartItem(${idx})" class="text-stone-400 hover:text-red-400 p-1 text-sm transition">✕</button>
+          </div>
+        `;
+        list.appendChild(row);
+      });
+    }
+
+    function modCartCount(idx, delta) {
+      cart[idx].count += delta;
+      if (cart[idx].count <= 0) cart.splice(idx, 1);
+      renderCart();
+    }
+
+    function dropCartItem(idx) {
+      cart.splice(idx, 1);
+      renderCart();
+    }
+
+    function emptyCart() {
+      if (cart.length > 0 && confirm('Warenkorb wirklich leeren?')) {
+        cart = [];
+        renderCart();
+      }
+    }
+
+    async function handleOrderSubmit(e) {
+      e.preventDefault();
+      if (cart.length === 0) {
+        alert('Dein Warenkorb ist leer. Bitte wähle zuerst Artikel aus.');
+        return;
+      }
+
+      const btn = document.getElementById('submit-btn');
+      const orig = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = `<span>⏳</span><span>Wird an Patrick übermittelt...</span>`;
+
+      const name = document.getElementById('cust-name').value.trim();
+      const phone = document.getElementById('cust-phone').value.trim() || 'Nicht angegeben';
+      const date = document.getElementById('cust-date').value || 'Nicht angegeben';
+      const time = document.getElementById('cust-time').value || 'Nicht angegeben';
+      const notes = document.getElementById('cust-notes').value.trim() || 'Keine';
+
+      const itemsText = cart.map((it, i) => `${i + 1}. [${it.count}x] ${it.title} (${it.type})\n   Details: ${it.details}`).join('\n\n');
+
+      const message = `Neue Bestellung über Charlys Backstube!
+
+KUNDENDATEN:
+Name: ${name}
+Telefon: ${phone}
+Abhol-/Lieferdatum: ${date}
+Uhrzeit: ${time}
+Wünsche: ${notes}
+
+BESTELLUNG:
+${itemsText}`;
+
+      try {
+        const res =  await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({
+            access_key: "13ef8479-99fe-4812-9698-2d77bf8f80b8",
+            subject: `Neue Bestellung von ${name} – Charlys Backstube`,
+            from_name: "Charlys Backstube",
+            name: name,
+            message: message
+          })
+        });
+
+        if (res.ok) {
+          cart = [];
+          renderCart();
+          switchView('success');
+        } else {
+          alert('Fehler beim Senden. Bitte versuche es erneut.');
+        }
+      } catch (err) {
+        alert('Verbindungsfehler beim Absenden der Bestellung.');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = orig;
+      }
+    }
+
+    function startNew() {
+      document.getElementById('order-form').reset();
+      switchView('menu');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initToppings();
+      renderCardList(BROTE_KLASSIKER, 'breads-classic-list', 'Brot');
+      renderCardList(BROTE_CIABATTA, 'breads-ciabatta-list', 'Ciabatta');
+      renderCardList(DIPS_1, 'dips-part1-list', 'Dip');
+      renderCardList(DIPS_2, 'dips-part2-list', 'Dip');
+      renderComingSoonList();
+      renderCart();
+    });
+  </script>
+</body>
+</html>
